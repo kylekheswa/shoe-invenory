@@ -22,16 +22,19 @@ class Shoe:
         """Return a string representation of the shoe."""
         return f"Country: {self.country}, Code: {self.code}, Product: {self.product}, Cost: {self.cost}, Quantity: {self.quantity}"
 
+# Class attribute for file name
+Shoe.file_name = "inventory.txt"
+
 # List to store shoe objects
 shoe_list = []
 
 # Functions outside the class
-def read_shoes_data():
+def read_shoes_data(file_name):
     """
     Read shoe data from the 'inventory.txt' file and populate the shoe_list.
     """
     try:
-        with open("inventory.txt", "r") as file:
+        with open(file_name, "r") as file:
             lines = file.readlines()[1:]  # Skip the first line
             for line in lines:
                 data = line.strip().split(",")
@@ -44,12 +47,12 @@ def read_shoes_data():
     except Exception as e:
         print(f"An error occurred: {e}")
 
-def update_inventory_file():
+def update_inventory_file(file_name):
     """
     Update the 'inventory.txt' file with the data from the shoe_list.
     """
     try:
-        with open("inventory.txt", "w") as file:
+        with open(file_name, "w") as file:
             file.write("Country,Code,Product,Cost,Quantity\n")
             for shoe in shoe_list:
                 file.write(f"{shoe.country},{shoe.code},{shoe.product},{shoe.cost},{shoe.quantity}\n")
@@ -71,7 +74,7 @@ def capture_shoes():
     print("Shoe data captured successfully.")
 
     # Update the text file with the new shoe data
-    update_inventory_file()
+    update_inventory_file(Shoe.file_name)
 
 def view_all():
     """
@@ -99,7 +102,7 @@ def re_stock():
         print(f"Restocked {restock_quantity} units.")
 
         # Update the text file with the new quantity
-        update_inventory_file()
+        update_inventory_file(Shoe.file_name)
 
     else:
         print("No shoes in inventory.")
@@ -157,7 +160,7 @@ while True:
     choice = input("Enter your choice: ")
 
     if choice == "1":
-        read_shoes_data()
+        read_shoes_data(Shoe.file_name)
     elif choice == "2":
         capture_shoes()
     elif choice == "3":
