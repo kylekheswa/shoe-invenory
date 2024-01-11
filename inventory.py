@@ -64,17 +64,26 @@ def capture_shoes():
     """
     Capture shoe data from user input and add it to the shoe_list. Also, update the 'inventory.txt' file.
     """
-    country = input("Enter country: ")
-    code = input("Enter code: ")
-    product = input("Enter product name: ")
-    cost = float(input("Enter cost: "))
-    quantity = int(input("Enter quantity: "))
-    shoe = Shoe(country, code, product, cost, quantity)
-    shoe_list.append(shoe)
-    print("Shoe data captured successfully.")
+    while True:
+        try:
+            country = input("Enter country: ")
+            code = input("Enter code: ")
+            product = input("Enter product name: ")
+            cost = float(input("Enter cost: "))
+            quantity = int(input("Enter quantity: "))
+            shoe = Shoe(country, code, product, cost, quantity)
+            shoe_list.append(shoe)
+            print("Shoe data captured successfully.")
 
-    # Update the text file with the new shoe data
-    update_inventory_file(Shoe.file_name)
+            # Update the text file with the new shoe data
+            update_inventory_file(Shoe.file_name)
+            break  # Exit the loop if input is valid
+
+        except ValueError:
+            print("Invalid input. Please enter a valid number.")
+        except Exception as e:
+            print(f"An error occurred: {e}")
+
 
 def view_all():
     """
